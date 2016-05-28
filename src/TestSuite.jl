@@ -36,7 +36,7 @@ macro vtest(s::AbstractString, ex::Expr)
     try print_with_color($(esc(ex)) ? passColor : failColor, 
       ($(esc(ex)) ? "Passed" : "Failed") * " Test: " * $s * "\n") 
     catch
-      #throw($(esc(ex))) # can I print without stopping?
+      throw($(esc(ex))) # can I print without stopping?
       print_with_color(stopColor, "Error in test syntax: " * $s * "\n")
     end
     Base.Test.@test $(esc(ex))
