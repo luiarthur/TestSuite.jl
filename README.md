@@ -27,15 +27,29 @@ You'll find a demo in the `demo` directory.
 The script, runtest, sleeps until any of the files in `src` changes, then
 executes the test suite in `test/tests/jl` in julia with color mode.
 
-Let's say this is the structure of your project:
+If this is the structure of your project:
 
 ```
 project/  
   src/  
     Main.jl  
-    TicTac.jl  
+    Stuff.jl  
   test/
     test.jl   
+```
+
+then in the `project` directory, execute in the terminal
+
+```bash
+./runtests
+```
+
+This will start the test suite. There is only one line in the `runtests` script.
+It's job is to call vulture and rerun the test suite when any of the files in 
+`src` changes. For more help on vulture, execute in the terminal
+
+```bash
+vulture --help
 ```
 
 ## Future
