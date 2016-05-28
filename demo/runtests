@@ -1,0 +1,3 @@
+#!/bin/bash
+
+vulture -d 'src' '\w*.jl' julia --color=yes 'test/tests.jl'
