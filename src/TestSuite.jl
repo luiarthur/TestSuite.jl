@@ -1,5 +1,4 @@
 module TestSuite
-using Base.Test
 export vtest, @vtest, testsuite
 
 """
@@ -40,7 +39,7 @@ macro vtest(s::AbstractString, ex::Expr)
       #throw($(esc(ex))) # can I print without stopping?
       print_with_color(stopColor, "Error in test syntax: " * $s * "\n")
     end
-    @test $(esc(ex))
+    Base.Test.@test $(esc(ex))
   end
 end
 
@@ -49,23 +48,23 @@ function testsuite(tests::Expr)
   numFail = 0
   numStop = 0
 
-  function custom_handler(r::Test.Success)
+  function custom_handler(r::Base.Test.Success)
     #print_with_color(passColor, "Passed test: $(r.expr)\n")
     numPass += 1
   end
 
-  function custom_handler(r::Test.Failure)
+  function custom_handler(r::Base.Test.Failure)
     #print_with_color(failColor, "Failed test : $(r.expr)\n")
     numFail += 1
   end
 
-  function custom_handler(r::Test.Error) 
+  function custom_handler(r::Base.Test.Error) 
     #print_with_color(failColor, "Error in test: $(r.expr)\n")
     numFail += 1
   end
 
 
-  Test.with_handler(custom_handler) do
+  Base.Test.with_handler(custom_handler) do
     println()
 
     eval(tests)
