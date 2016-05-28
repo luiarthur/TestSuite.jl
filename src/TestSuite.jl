@@ -32,15 +32,30 @@ failColor = :black
 stopColor = :red
 
 macro vtest(s::AbstractString, ex::Expr)
-  quote
-    try print_with_color($(esc(ex)) ? passColor : failColor, 
-      ($(esc(ex)) ? "Passed" : "Failed") * " Test: " * $s * "\n") 
+  #quote
+  #  try print_with_color($(esc(ex)) ? passColor : failColor, 
+  #    ($(esc(ex)) ? "Passed" : "Failed") * " Test: " * $s * "\n") 
+  #  catch
+  #    throw($(esc(ex))) # can I print without stopping?
+  #    print_with_color(stopColor, "Error in test syntax: " * $s * "\n")
+  #  end
+  #  Base.Test.@test $(esc(ex))
+  #end
+  :(
+    msgColor = stopColor;
+    msg = "Erro in test syntax: ";
+    good = false;
+    try 
+      good = $ex;
+      msg, msgColor = good ? ("Passed",passColor) : ("Failed",failColor);
+      print_with_color(msgColor, msg * " Test: " * $s * "\n");
     catch
-      throw($(esc(ex))) # can I print without stopping?
-      print_with_color(stopColor, "Error in test syntax: " * $s * "\n")
-    end
-    Base.Test.@test $(esc(ex))
-  end
+      #throw($(esc(ex))) # can I print without stopping?
+      print_with_color(msgColor, msg * $s * "\n");
+    end;
+    Base.Test.@test good;
+  )
+
 end
 
 function testsuite(tests::Expr)
