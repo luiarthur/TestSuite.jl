@@ -43,7 +43,7 @@ macro vtest(s::AbstractString, ex::Expr)
   #end
   :(
     msgColor = stopColor;
-    msg = "Erro in test syntax: ";
+    msg = "Error in Test Syntax: ";
     good = false;
     try 
       good = $ex;

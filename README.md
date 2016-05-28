@@ -52,6 +52,14 @@ It's job is to call vulture and rerun the test suite when any of the files in
 vulture --help
 ```
 
+## Notes
+
+Note that the script only tracks changes in the directory listed in the `-d`
+option. So in this demo provided, the test won't run when you write to
+`test.jl`. However, when you write to `Stuff.jl` or `Main.jl` (which are in
+the `src` directory), all the changes to your `test.jl` will be included.
+
+
 ## Future
 
 More documentation coming soon.

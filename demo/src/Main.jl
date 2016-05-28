@@ -1,2 +1,2 @@
 include("Stuff.jl")
-using TicTac
+using Stuff
