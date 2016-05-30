@@ -45,14 +45,14 @@ macro vtest(s::AbstractString, ex::Expr)
     msgColor = stopColor;
     msg = "Error in Test Syntax: ";
     good = false;
-    try 
+    #try 
       good = $ex;
       msg, msgColor = good ? ("Passed",passColor) : ("Failed",failColor);
       print_with_color(msgColor, msg * " Test: " * $s * "\n");
-    catch
-      #throw($(esc(ex))) # can I print without stopping?
-      print_with_color(msgColor, msg * $s * "\n");
-    end;
+    #catch
+    #  #throw($(esc(ex))) # can I print without stopping?
+    #  print_with_color(msgColor, msg * $s * "\n");
+    #end;
     Base.Test.@test good;
   )
 
